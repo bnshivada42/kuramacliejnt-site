@@ -6,233 +6,671 @@
     <title>KuramaClient — KuramaMC'nin Özel Launcher'ı</title>
     <meta name="description" content="KuramaMC sunucusu için özel olarak geliştirilmiş, otomatik giriş ve premium özelliklere sahip Minecraft launcher'ı. Hemen indir, rekabete katıl!" />
     
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="KuramaClient — KuramaMC'nin Özel Launcher'ı" />
-    <meta property="og:description" content="KuramaMC sunucusu için özel olarak geliştirilmiş Minecraft launcher'ı." />
-    <meta property="og:image" content="mcicon.png" />
-
+    <!-- FAVICON (Sorunsuz Çalışan Kısım) -->
     <link rel="icon" type="image/png" href="mcicon.png" />
     <link rel="apple-touch-icon" href="mcicon.png" />
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet" />
-    
     <style>
         :root {
-            --bg-color: #080710;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --text-primary: #ffffff;
-            --text-secondary: #b3b3b3;
-            --accent-blue: #00d2ff;
-            --accent-purple: #0045ff;
+            --accent: #38bdf8;
+            --accent2: #818cf8;
+            --glow: rgba(56, 189, 248, 0.35);
+            --bg: #020617;
+            --bg2: #0f172a;
+            --glass: rgba(30, 41, 59, 0.45);
+            --border: rgba(255,255,255,0.08);
+            --text: #f8fafc;
+            --muted: #94a3b8;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Arka Plan Glow Efektleri */
-        .background-glow {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .glow-1 {
-            position: absolute;
-            top: -10%;
-            left: -10%;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, rgba(0, 210, 255, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-            border-radius: 50%;
-        }
-
-        .glow-2 {
-            position: absolute;
-            bottom: -10%;
-            right: -10%;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, rgba(0, 69, 255, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-            border-radius: 50%;
-        }
-
-        /* Ana Konteyner */
-        .container {
-            position: relative;
-            z-index: 2;
-            width: 90%;
-            max-width: 500px;
-            padding: 40px 30px;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 60px;
+            background: rgba(2,6,23,0.75);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            animation: fadeInUp 0.8s ease-out;
+            border-bottom: 1px solid var(--border);
         }
 
-        /* Logo Alanı */
-        .logo-area {
-            position: relative;
-            margin-bottom: 25px;
-            display: inline-block;
-        }
-
-        .logo-img {
-            width: 130px;
-            height: 130px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.4));
-            transition: transform 0.3s ease;
-        }
-
-        .logo-img:hover {
-            transform: scale(1.05);
-        }
-
-        /* Başlıklar */
-        h1 {
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-family: 'Outfit', sans-serif;
-            font-size: 2.5rem;
+            font-size: 22px;
             font-weight: 900;
-            margin-bottom: 12px;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #fff 0%, #858585 100%);
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .subtitle {
-            font-size: 1rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 35px;
-            font-weight: 400;
+        .nav-logo img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
         }
 
-        /* Buton Grubu */
-        .btn-group {
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-        }
-
-        .btn {
-            display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
-            padding: 16px 24px;
-            border-radius: 14px;
-            font-size: 1rem;
+            text-align: center;
+            padding: 120px 24px 80px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(56,189,248,0.1);
+            border: 1px solid rgba(56,189,248,0.3);
+            border-radius: 999px;
+            padding: 6px 18px;
+            font-size: 13px;
+            color: var(--accent);
             font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
-            color: #fff;
-            border: none;
-            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.25);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 210, 255, 0.4);
-            filter: brightness(1.1);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.04);
-            color: var(--text-primary);
-            border: 1px solid var(--card-border);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Sürüm Bilgisi */
-        .version-tag {
-            display: inline-block;
-            margin-top: 25px;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.3);
-            font-weight: 500;
+            margin-bottom: 28px;
             letter-spacing: 0.5px;
         }
 
-        /* Animasyonlar */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            animation: pulse 2s infinite;
         }
 
-        /* Mobil Optimizasyon */
-        @media (max-width: 480px) {
-            .container {
-                padding: 30px 20px;
-            }
-            h1 {
-                font-size: 2rem;
-            }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(52px, 8vw, 96px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 60%, var(--accent2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-sub {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(18px, 3vw, 26px);
+            color: var(--muted);
+            font-weight: 400;
+            margin-bottom: 48px;
+            letter-spacing: 1px;
+        }
+
+        .hero-sub strong {
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 64px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--accent);
+            color: #020617;
+            font-family: 'Outfit', sans-serif;
+            font-size: 17px;
+            font-weight: 800;
+            padding: 16px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 30px var(--glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px var(--glow);
+            background: #7dd3fc;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            padding: 16px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass);
+            border-color: rgba(255,255,255,0.15);
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* ── FEATURES ── */
+        .features {
+            padding: 100px 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            text-align: center;
+            font-size: 13px;
+            color: var(--accent);
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 900;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .section-desc {
+            text-align: center;
+            color: var(--muted);
+            font-size: 17px;
+            max-width: 560px;
+            margin: 0 auto 64px;
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56,189,248,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .feature-desc {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* ── DOWNLOAD SECTION ── */
+        .download-section {
+            padding: 100px 24px;
+            text-align: center;
+            position: relative;
+        }
+
+        .download-card {
+            max-width: 680px;
+            margin: 48px auto 0;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(56,189,248,0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .version-badge {
+            background: rgba(56,189,248,0.1);
+            border: 1px solid rgba(56,189,248,0.2);
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 13px;
+            color: var(--accent);
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .download-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .download-desc {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .download-info {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            font-size: 13px;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-item span { color: var(--text); font-weight: 600; }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-logo img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+        }
+
+        .footer-text {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            font-size: 13px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--accent); }
+
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+        /* ── PARTICLES ── */
+        #particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(56,189,248,0.4);
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-20px) scale(1); opacity: 0; }
+        }
+
+        .hero, .features, .download-section, nav, footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 16px 24px; }
+            .nav-links { display: none; }
+            footer { flex-direction: column; gap: 16px; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <div class="background-glow">
-        <div class="glow-1"></div>
-        <div class="glow-2"></div>
+<div id="particles"></div>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-logo">
+        <img src="mcicon.png" alt="KuramaClient Logo" />
+        KuramaClient
     </div>
+    <ul class="nav-links">
+        <li><a href="#features">Özellikler</a></li>
+        <li><a href="#download">İndir</a></li>
+        <li><a href="https://discord.gg/kuramamc" target="_blank">Discord</a></li>
+    </ul>
+</nav>
 
-    <div class="container">
-        <div class="logo-area">
-            <img src="mcicon.png" alt="KuramaClient Logo" class="logo-img" />
-        </div>
-        
-        <h1>KuramaClient</h1>
-        <p class="subtitle">KuramaMC sunucusuna özel optimize edilmiş, otomatik giriş ve yüksek FPS destekli resmi Minecraft Launcher.</p>
-        
-        <div class="btn-group">
-            <a href="#" class="btn btn-primary">Hemen İndir (.exe)</a>
-            <a href="https://kuramamc.online" class="btn btn-secondary">Ana Sayfaya Dön</a>
-        </div>
-
-        <span class="version-tag">SÜRÜM v1.0.0 — FABRIC TABANLI</span>
+<!-- HERO -->
+<section class="hero">
+    <div class="badge">v1.0.3 — Yeni Sürüm Yayında</div>
+    <h1><span>KuramaClient</span></h1>
+    <p class="hero-sub">
+        KuramaMC'nin resmi launcher'ı.<br />
+        <strong>Kur, Giriş Yap, Oyna.</strong>
+    </p>
+    <div class="btn-group">
+        <a href="https://github.com/bnshivada42/kuramacliejnt-site/releases/download/v1.0.3/KuramaClient-Setup-v1.0.3.exe" id="download-btn" class="btn-primary">
+            ⬇ Şimdi İndir
+        </a>
+        <a href="https://discord.gg/kuramamc" target="_blank" class="btn-secondary">
+            💬 Discord
+        </a>
     </div>
+    <div class="hero-stats">
+        <div class="stat">
+            <div class="stat-num">1 Tık</div>
+            <div class="stat-label">Otomatik Giriş</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Ücretsiz</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">v1.0.3</div>
+            <div class="stat-label">Son Sürüm</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">1.21.11</div>
+            <div class="stat-label">Minecraft Versiyonu</div>
+        </div>
+    </div>
+</section>
 
+<!-- FEATURES -->
+<section class="features" id="features">
+    <div class="section-label">Neden KuramaClient?</div>
+    <h2 class="section-title">Her Şey Hazır, Sadece Oyna</h2>
+    <p class="section-desc">Sunucuya giriş yaparken uğraşma. KuramaClient her şeyi senin için halleder.</p>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <span class="feature-icon">⚡</span>
+            <div class="feature-title">Otomatik Giriş</div>
+            <div class="feature-desc">Kullanıcı adı ve şifreni bir kere kaydet, bir daha yazma. Oyuna bas, anında sunucuya giriş yap.</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🚀</span>
+            <div class="feature-title">Hızlı Bağlantı</div>
+            <div class="feature-desc">Oyun açıldığı anda sunucuya otomatik bağlanır. Menüde beklemene gerek yok.</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🛡️</span>
+            <div class="feature-title">Mod Koruması</div>
+            <div class="feature-desc">Yetkisiz modları gerçek zamanlı olarak tespit edip engeller. Daha adil ve güvenli bir sunucu ortamı.</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🎮</span>
+            <div class="feature-title">Discord Durumu</div>
+            <div class="feature-desc">Oyundayken Discord profilinde otomatik olarak KuramaMC durumu gösterilir. Arkadaşlarını da davet et!</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">⚙️</span>
+            <div class="feature-title">Gelişmiş Ayarlar</div>
+            <div class="feature-desc">RAM miktarı, çözünürlük, Discord RPC ve daha fazlasını launcher içinden kolayca ayarla.</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">💎</span>
+            <div class="feature-title">Ücretsiz & Sürekli Güncelleme</div>
+            <div class="feature-desc">KuramaClient tamamen ücretsizdir. Geliştirici ekibimiz yeni özellikler eklemeye devam ediyor.</div>
+        </div>
+    </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section class="download-section" id="download">
+    <div class="section-label">İndirme</div>
+    <h2 class="section-title">Rekabete Hazır Mısın?</h2>
+    <p class="section-desc">KuramaClient'ı indir, kur ve dakikalar içinde KuramaMC sunucusunda oynamaya başla.</p>
+
+    <div class="download-card">
+        <div class="version-badge">Windows — v1.0.3</div>
+        <div class="download-title">KuramaClient Setup</div>
+        <p class="download-desc">
+            Tek tıkla kur, otomatik olarak yapılandır.<br />
+            Sistem gereksinimleri: Windows 10/11, 4GB+ RAM
+        </p>
+        <a href="https://github.com/bnshivada42/kuramacliejnt-site/releases/download/v1.0.3/KuramaClient-Setup-v1.0.3.exe" class="btn-primary" style="font-size:18px; padding:18px 56px;">
+            ⬇ İndir — Ücretsiz
+        </a>
+        <div class="download-info">
+            <div class="info-item">📦 Dosya Boyutu: <span>~85 MB</span></div>
+            <div class="info-item">🖥️ Platform: <span>Windows 10/11</span></div>
+            <div class="info-item">🎮 Minecraft: <span>1.21.11</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-logo">
+        <img src="mcicon.png" alt="KuramaClient Logo" />
+        KuramaClient
+    </div>
+    <div class="footer-text">© 2025 KuramaMC. Tüm hakları saklıdır.</div>
+    <div class="footer-links">
+        <a href="https://discord.gg/kuramamc" target="_blank">Discord</a>
+        <a href="https://shopier.com/KuramaMC" target="_blank">Mağaza</a>
+    </div>
+</footer>
+
+<script>
+    // Particles
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 40; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        const size = Math.random() * 4 + 1;
+        p.style.cssText = `
+            width: ${size}px;
+            height: ${size}px;
+            left: ${Math.random() * 100}%;
+            animation-duration: ${Math.random() * 15 + 10}s;
+            animation-delay: ${Math.random() * 15}s;
+            opacity: ${Math.random() * 0.6};
+        `;
+        container.appendChild(p);
+    }
+
+    // Download counter (cosmetic)
+    const btn = document.getElementById('download-btn');
+    if (btn) {
+        btn.addEventListener('click', () => {
+            btn.textContent = '✓ İndirme Başladı!';
+            btn.style.background = '#22c55e';
+            setTimeout(() => {
+                btn.textContent = '⬇ Şimdi İndir';
+                btn.style.background = '';
+            }, 3000);
+        });
+    }
+</script>
 </body>
 </html>

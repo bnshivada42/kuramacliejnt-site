@@ -5,8 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KuramaClient — KuramaMC'nin Özel Launcher'ı</title>
     <meta name="description" content="KuramaMC sunucusu için özel olarak geliştirilmiş, otomatik giriş ve premium özelliklere sahip Minecraft launcher'ı. Hemen indir, rekabete katıl!">
+    
+    <link rel="icon" type="image/png" href="mcicon.png">
+    <link rel="apple-touch-icon" href="mcicon.png">
+
     <meta property="og:title" content="KuramaClient — Rekabete Hazır Mısın?">
     <meta property="og:description" content="KuramaMC'nin resmi launcher'ı. Tek tıkla kur, hemen oyna.">
+    <meta property="og:image" content="mcicon.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -45,7 +51,11 @@
             border-bottom: 1px solid var(--border);
         }
 
+        /* Logoyu görselle hizalamak için flex eklendi */
         .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-family: 'Outfit', sans-serif;
             font-size: 22px;
             font-weight: 900;
@@ -53,6 +63,12 @@
             background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .nav-logo img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
         }
 
         .nav-links {
@@ -417,10 +433,13 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: gap;
+            flex-wrap: wrap;
         }
 
         .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-family: 'Outfit', sans-serif;
             font-size: 18px;
             font-weight: 900;
@@ -428,6 +447,12 @@
             background: linear-gradient(135deg, #fff, var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .footer-logo img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
         }
 
         .footer-text {
@@ -480,171 +505,4 @@
 
         .hero, .features, .download-section, nav, footer {
             position: relative;
-            z-index: 1;
-        }
-
-        @media (max-width: 768px) {
-            nav { padding: 16px 24px; }
-            .nav-links { display: none; }
-            footer { flex-direction: column; gap: 16px; text-align: center; }
-        }
-    </style>
-</head>
-<body>
-
-<div id="particles"></div>
-
-<!-- NAV -->
-<nav>
-    <div class="nav-logo">KuramaClient</div>
-    <ul class="nav-links">
-        <li><a href="#features">Özellikler</a></li>
-        <li><a href="#download">İndir</a></li>
-        <li><a href="https://discord.gg/kuramamc" target="_blank">Discord</a></li>
-    </ul>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-    <div class="badge">v1.0.3
-        — Yeni Sürüm Yayında</div>
-    <h1><span>KuramaClient</span></h1>
-    <p class="hero-sub">
-        KuramaMC'nin resmi launcher'ı.<br>
-        <strong>Kur, Giriş Yap, Oyna.</strong>
-    </p>
-    <div class="btn-group">
-        <a href="https://github.com/bnshivada42/kuramacliejnt-site/releases/download/v1.0.3/KuramaClient-Setup-v1.0.3.exe" id="download-btn" class="btn-primary">
-            ⬇ Şimdi İndir
-        </a>
-        <a href="https://discord.gg/kuramamc" target="_blank" class="btn-secondary">
-            💬 Discord
-        </a>
-    </div>
-    <div class="hero-stats">
-        <div class="stat">
-            <div class="stat-num">1 Tık</div>
-            <div class="stat-label">Otomatik Giriş</div>
-        </div>
-        <div class="stat">
-            <div class="stat-num">100%</div>
-            <div class="stat-label">Ücretsiz</div>
-        </div>
-        <div class="stat">
-            <div class="stat-num">v1.0.3</div>
-            <div class="stat-label">Son Sürüm</div>
-        </div>
-        <div class="stat">
-            <div class="stat-num">1.21.11</div>
-            <div class="stat-label">Minecraft Versiyonu</div>
-        </div>
-    </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features" id="features">
-    <div class="section-label">Neden KuramaClient?</div>
-    <h2 class="section-title">Her Şey Hazır, Sadece Oyna</h2>
-    <p class="section-desc">Sunucuya giriş yaparken uğraşma. KuramaClient her şeyi senin için halleder.</p>
-
-    <div class="features-grid">
-        <div class="feature-card">
-            <span class="feature-icon">⚡</span>
-            <div class="feature-title">Otomatik Giriş</div>
-            <div class="feature-desc">Kullanıcı adı ve şifreni bir kere kaydet, bir daha yazma. Oyuna bas, anında sunucuya giriş yap.</div>
-        </div>
-        <div class="feature-card">
-            <span class="feature-icon">🚀</span>
-            <div class="feature-title">Hızlı Bağlantı</div>
-            <div class="feature-desc">Oyun açıldığı anda sunucuya otomatik bağlanır. Menüde beklemene gerek yok.</div>
-        </div>
-        <div class="feature-card">
-            <span class="feature-icon">🛡️</span>
-            <div class="feature-title">Mod Koruması</div>
-            <div class="feature-desc">Yetkisiz modları gerçek zamanlı olarak tespit edip engeller. Daha adil ve güvenli bir sunucu ortamı.</div>
-        </div>
-        <div class="feature-card">
-            <span class="feature-icon">🎮</span>
-            <div class="feature-title">Discord Durumu</div>
-            <div class="feature-desc">Oyundayken Discord profilinde otomatik olarak KuramaMC durumu gösterilir. Arkadaşlarını da davet et!</div>
-        </div>
-        <div class="feature-card">
-            <span class="feature-icon">⚙️</span>
-            <div class="feature-title">Gelişmiş Ayarlar</div>
-            <div class="feature-desc">RAM miktarı, çözünürlük, Discord RPC ve daha fazlasını launcher içinden kolayca ayarla.</div>
-        </div>
-        <div class="feature-card">
-            <span class="feature-icon">💎</span>
-            <div class="feature-title">Ücretsiz & Sürekli Güncelleme</div>
-            <div class="feature-desc">KuramaClient tamamen ücretsizdir. Geliştirici ekibimiz yeni özellikler eklemeye devam ediyor.</div>
-        </div>
-    </div>
-</section>
-
-<!-- DOWNLOAD -->
-<section class="download-section" id="download">
-    <div class="section-label">İndirme</div>
-    <h2 class="section-title">Rekabete Hazır Mısın?</h2>
-    <p class="section-desc">KuramaClient'ı indir, kur ve dakikalar içinde KuramaMC sunucusunda oynamaya başla.</p>
-
-    <div class="download-card">
-        <div class="version-badge">Windows — v1.0.3</div>
-        <div class="download-title">KuramaClient Setup</div>
-        <p class="download-desc">
-            Tek tıkla kur, otomatik olarak yapılandır.<br>
-            Sistem gereksinimleri: Windows 10/11, 4GB+ RAM
-        </p>
-        <a href="https://github.com/bnshivada42/kuramacliejnt-site/releases/download/v1.0.3/KuramaClient-Setup-v1.0.3.exe" class="btn-primary" style="font-size:18px; padding:18px 56px;">
-            ⬇ İndir — Ücretsiz
-        </a>
-        <div class="download-info">
-            <div class="info-item">📦 Dosya Boyutu: <span>~85 MB</span></div>
-            <div class="info-item">🖥️ Platform: <span>Windows 10/11</span></div>
-            <div class="info-item">🎮 Minecraft: <span>1.21.11</span></div>
-        </div>
-    </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-    <div class="footer-logo">KuramaClient</div>
-    <div class="footer-text">© 2025 KuramaMC. Tüm hakları saklıdır.</div>
-    <div class="footer-links">
-        <a href="https://discord.gg/kuramamc" target="_blank">Discord</a>
-        <a href="https://shopier.com/KuramaMC" target="_blank">Mağaza</a>
-    </div>
-</footer>
-
-<script>
-    // Particles
-    const container = document.getElementById('particles');
-    for (let i = 0; i < 40; i++) {
-        const p = document.createElement('div');
-        p.classList.add('particle');
-        const size = Math.random() * 4 + 1;
-        p.style.cssText = `
-            width: ${size}px;
-            height: ${size}px;
-            left: ${Math.random() * 100}%;
-            animation-duration: ${Math.random() * 15 + 10}s;
-            animation-delay: ${Math.random() * 15}s;
-            opacity: ${Math.random() * 0.6};
-        `;
-        container.appendChild(p);
-    }
-
-    // Download counter (cosmetic)
-    const btn = document.getElementById('download-btn');
-    if (btn) {
-        btn.addEventListener('click', () => {
-            btn.textContent = '✓ İndirme Başladı!';
-            btn.style.background = '#22c55e';
-            setTimeout(() => {
-                btn.textContent = '⬇ Şimdi İndir';
-                btn.style.background = '';
-            }, 3000);
-        });
-    }
-</script>
-</body>
-</html>
+            z
